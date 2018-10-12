@@ -5,7 +5,8 @@ from . import views
 
 app_name = "flocks"
 urlpatterns = [
-    path('', views.all, name='all'),
+    path('', views.summary, name='summary'),
+    path('<str:username>', views.profile, name='profile'),
     path('stumbled', views.stumbled, name='stumbled'),
-    path('bookmarks', views.bookmarks, name='bookmarks')
+    path('bookmarks', views.bookmarks, name='bookmarks'),
 ]
