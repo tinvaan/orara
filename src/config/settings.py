@@ -30,7 +30,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,6 +38,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
+ORARA_APPS = [
+    'profiles.apps.ProfilesConfig',
+    'flocks.apps.FlocksConfig',
+    'events.apps.EventsConfig'
+]
+
+THIRD_PARTY_APPS = [
+    'taggit',
+    'multiselectfield'
+]
+
+INSTALLED_APPS = DJANGO_APPS + ORARA_APPS + THIRD_PARTY_APPS
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -118,3 +132,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, '../media')
+
+
+# django-taggit setttings
+# https://django-taggit.readthedocs.io/en/latest/
+
+TAGGIT_CASE_INSENSITIVE = True
+
+AUTH_USER_MODEL = 'profiles.OraraUser'
