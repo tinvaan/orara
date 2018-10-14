@@ -7,8 +7,22 @@ from django.core.validators import RegexValidator
 from geopy import geocoders
 from geopy.exc import GeocoderServiceError
 from taggit.managers import TaggableManager
+from multiselectfield import MultiSelectField
 
 from profiles.models import OraraUser
+
+
+EVENT_CATEGORIES = (
+    ("NA", "RANDOM"),
+    ("SP", "SPORTS"),
+    ("OD", "OUTDOOR"),
+    ("BK", "BOOKS"),
+    ("MV", "MOVIES"),
+    ("PH", "PHOTOGRAPHY"),
+    ("DT", "DATING"),
+    ("NL", "NIGHTLIFE"),
+    ("TH", "TECHNICAL"),
+    ("UN", "UNCATEGORIZED"))
 
 
 class OraraEvent(models.Model):
@@ -26,6 +40,7 @@ class OraraEvent(models.Model):
     phone = models.CharField(verbose_name="Contact", validators=[validator],
                              max_length=17, blank=True)
     tags = TaggableManager()
+    categories = MultiSelectField(choices=EVENT_CATEGORIES, default="UN")
 
     class Meta:
         verbose_name = "Event"

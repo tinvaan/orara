@@ -1,11 +1,43 @@
-from django.http import HttpResponse
+import json
+
+from django.http import HttpResponse, HttpResponseNotFound
+
+from events.models import OraraEvent
+from profiles.utils import events_for
+from profiles.models import UserInterests
 
 
 def summary(request):
     '''
     Summary of upcoming events in proximity
     '''
-    return HttpResponse("TODO")
+    try:
+        user = UserInterests.objects.get(user=request.user)
+        events = events_for(user)
+    except UserInterests.DoesNotExist:
+        events = OraraEvent.objects.all()
+
+    response = []
+    for event in events:
+        response.append({
+            'name': event.name,
+            'description': event.description,
+            'venue': {
+                'name': event.venue,
+                'area': event.venue_area,
+                'lat': str(event.venue_lat),
+                'lon': str(event.venue_lon)
+            },
+            'contact': {
+                'email': event.email,
+                'phone': event.phone,
+                'website': event.website,
+            },
+            'date': str(event.timestamp),
+            'tags': list(event.tags.names())
+        })
+    return HttpResponse(json.dumps(response, indent=4),
+                        content_type="application/json")
 
 
 def invites(request):
