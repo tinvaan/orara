@@ -63,6 +63,9 @@ class OraraEvent(models.Model):
 
 
 class EventCustomers(models.Model):
+    '''
+    Customers going to an event
+    '''
     event = models.ForeignKey(OraraEvent, on_delete=models.CASCADE)
     customer =  models.ForeignKey(OraraUser, on_delete=models.CASCADE)
 
@@ -72,3 +75,16 @@ class EventCustomers(models.Model):
 
     def __str__(self):
         return "'{}' -- '{}'".format(self.event, self.customer)
+
+
+class EventInvites(models.Model):
+    event = models.ForeignKey(OraraEvent, on_delete=models.CASCADE)
+    user = models.ForeignKey(OraraUser, related_name='user', on_delete=models.CASCADE)
+    host = models.ForeignKey(OraraUser, related_name='host', on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Invites"
+        verbose_name_plural = "Invites"
+
+    def __str__(self):
+        return "'{}' invited to '{}' by '{}'".format(user, event, invited_by)

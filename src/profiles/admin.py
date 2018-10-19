@@ -7,7 +7,7 @@ admin.site.site_header = "Orara | Dashboard"
 
 
 class OraraUserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'bio', 'email', 'phone')
+    list_display = ('username', 'area', 'status', 'email')
 
 
 class UserInterestsAdmin(admin.ModelAdmin):

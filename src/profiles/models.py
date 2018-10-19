@@ -23,6 +23,7 @@ class OraraUser(AbstractUser):
     photo = models.ImageField(verbose_name="Profile photo", blank=True, upload_to='profiles')
     validator = RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                message="Format(15 digits): '+999999999'.")
+    status = models.TextField(verbose_name="Status", default="Available")
     phone = models.CharField(verbose_name="Contact Number", validators=[validator], max_length=17, blank=True)
     area = models.CharField(verbose_name="Area", max_length=40, blank=True)
     area_lat = models.DecimalField(max_digits=9, decimal_places=6, default=0.0)
@@ -34,6 +35,9 @@ class OraraUser(AbstractUser):
 
     def __str__(self):
         return self.get_username()
+
+    def name(self):
+        return self.first_name + " " + self.last_name
 
     def save(self, *args, **kwargs):
         # Encrypt password if not encrypted
@@ -53,18 +57,6 @@ class OraraUser(AbstractUser):
         super().save(*args, **kwargs)
 
 
-class UserInterests(models.Model):
-    user = models.ForeignKey(OraraUser, on_delete=models.CASCADE)
-    interests = MultiSelectField(choices=INTERESTS, max_choices=3, default="NA")
-
-    class Meta:
-        verbose_name = "Interests"
-        verbose_name_plural = "Interests"
-
-    def __str__(self):
-        return "Registered interests for '{}'".format(self.user)
-
-
 class SocialProfiles(models.Model):
     user = models.ForeignKey(OraraUser, on_delete=models.CASCADE)
     blog = models.CharField(verbose_name="Blog", blank=True, max_length=60, default="#")
@@ -80,3 +72,15 @@ class SocialProfiles(models.Model):
 
     def __str__(self):
         return "Social profile for '{}'".format(self.user)
+
+
+class UserInterests(models.Model):
+    user = models.ForeignKey(OraraUser, on_delete=models.CASCADE)
+    interests = MultiSelectField(choices=INTERESTS, max_choices=3, default="NA")
+
+    class Meta:
+        verbose_name = "Interests"
+        verbose_name_plural = "Interests"
+
+    def __str__(self):
+        return "Registered interests for '{}'".format(self.user)
