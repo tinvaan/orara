@@ -1,10 +1,8 @@
 *.db
 *.pyc
-*.sqlite3
 
-__pycache__/
-migrations/
 media/
+__pycache__/
 
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
