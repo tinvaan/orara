@@ -1,28 +1,29 @@
 import json
 
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 
 from flocks.utils import match_percentage
 from profiles.models import OraraUser, SocialProfiles, UserInterests
 
 
 def summary(request):
-    '''Fetch all users in proximity, sorted by
-    - Age range
-    - Gender
-    - Common places(school, work, band, NGO, etc)
-    - Mutual friends
-    - Languages spoken
-    - Common cities
-    '''
-    return HttpResponse("TODO")
+    return HttpResponseRedirect('/flocks/explore')
 
 
-def profile(request, id):
+def profile(request, name):
     '''
     Profile information of a particular user in flocks
     '''
-    return HttpResponse("TODO")
+    try:
+        user = OraraUser.objects.get(username=name)
+    except OraraUser.DoesNotExist:
+        return HttpResponseNotFound("User '{}' not found".format(name))
+    return HttpResponse(json.dumps({
+        'name': user.name(),
+        'status': user.status,
+        'area': user.area,
+        'phone': user.phone
+    }, indent=4), content_type="application/json")
 
 
 def explore(request):
