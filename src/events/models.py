@@ -87,4 +87,4 @@ class EventInvites(models.Model):
         verbose_name_plural = "Invites"
 
     def __str__(self):
-        return "'{}' invited to '{}' by '{}'".format(user, event, invited_by)
+        return "'{}' invited to '{}' by '{}'".format(self.user, self.event, self.host)
