@@ -10,4 +10,5 @@ urlpatterns = [
     path('stumbled', views.stumbled, name='stumbled'),
     path('bookmarks', views.bookmarks, name='bookmarks'),
     path('users/<str:name>', views.profile, name='profile'),
+    path('connections', views.connections, name='connections')
 ]

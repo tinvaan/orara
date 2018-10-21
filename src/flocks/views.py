@@ -2,8 +2,10 @@ import json
 
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
 
-from flocks.utils import match_percentage
-from profiles.models import OraraUser, SocialProfiles, UserInterests
+from events.models import EventCustomers
+from profiles.models import OraraUser, UserInterests
+from flocks.utils import match_percentage, get_customers
+from flocks.models import UserBookmarks, OraraConnections
 
 
 def summary(request):
@@ -68,16 +70,56 @@ def explore(request):
                         content_type="application/json")
 
 
-
 def stumbled(request):
     '''
     Fetch all users you've connected with in previous events.
     '''
-    return HttpResponse("TODO")
+    customers = []
+    for item in EventCustomers.objects.filter(customer=request.user):
+        customers.append(get_customers(item.event))
+    customers = {} if len(customers) == 0 else customers
+    return HttpResponse(json.dumps(customers, indent=4),
+                        content_type="application/json")
 
 
 def bookmarks(request):
     '''
     Fetch all users you've shown an interest in.
     '''
-    return HttpResponse("TODO")
+    response = []
+    for bookmark in UserBookmarks.objects.all():
+        response.append({
+            'name': bookmark.bookmark.name(),
+            'area': bookmark.bookmark.area,
+            'status': bookmark.bookmark.status,
+            'phone': bookmark.bookmark.phone
+        })
+
+    response = {} if len(response) == 0 else response
+    return HttpResponse(json.dumps(response, indent=4),
+                        content_type="application/json")
+
+
+def connections(request):
+    '''
+    Return all connections for a user
+    '''
+    response = []
+    for connection in OraraConnections.objects.filter(user1=request.user, approved=True):
+        response.append({
+            'name': connection.user2.name(),
+            'area': connection.user2.area,
+            'status': connection.user2.status,
+            'phone': connection.user2.phone
+        })
+    for connection in OraraConnections.objects.filter(user2=request.user, approved=True):
+        response.append({
+            'name': connection.user1.name(),
+            'area': connection.user2.area,
+            'status': connection.user2.status,
+            'phone': connection.user2.phone
+        })
+
+    response = {} if len(response) == 0 else response
+    return HttpResponse(json.dumps(response, indent=4),
+                        content_type="application/json")

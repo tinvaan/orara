@@ -1,3 +1,15 @@
 from django.contrib import admin
 
-# Register your models here.
+from flocks.models import OraraConnections, UserBookmarks
+
+
+class OraraConnectionsAdmin(admin.ModelAdmin):
+    list_display = ('user1', 'user2')
+
+
+class UserBookmarksAdmin(admin.ModelAdmin):
+    list_display = ('user', 'bookmark')
+
+
+admin.site.register(OraraConnections, OraraConnectionsAdmin)
+admin.site.register(UserBookmarks, UserBookmarksAdmin)
