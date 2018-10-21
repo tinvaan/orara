@@ -1,6 +1,8 @@
 import json
 
-from django.http import HttpResponse, HttpResponseNotFound, HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, HttpResponseNotFound,\
+                        HttpResponseRedirect
 
 from events.models import EventCustomers
 from profiles.models import OraraUser, UserInterests
@@ -8,10 +10,12 @@ from flocks.utils import match_percentage, get_customers
 from flocks.models import UserBookmarks, OraraConnections
 
 
+@login_required
 def summary(request):
     return HttpResponseRedirect('/flocks/explore')
 
 
+@login_required
 def profile(request, name):
     '''
     Profile information of a particular user in flocks
@@ -28,6 +32,7 @@ def profile(request, name):
     }, indent=4), content_type="application/json")
 
 
+@login_required
 def explore(request):
     '''
     Find people with similar interests around you
@@ -70,6 +75,7 @@ def explore(request):
                         content_type="application/json")
 
 
+@login_required
 def stumbled(request):
     '''
     Fetch all users you've connected with in previous events.
@@ -82,6 +88,7 @@ def stumbled(request):
                         content_type="application/json")
 
 
+@login_required
 def bookmarks(request):
     '''
     Fetch all users you've shown an interest in.
@@ -100,6 +107,7 @@ def bookmarks(request):
                         content_type="application/json")
 
 
+@login_required
 def connections(request):
     '''
     Return all connections for a user
