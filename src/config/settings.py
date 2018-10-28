@@ -159,3 +159,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '../media')
 # https://django-taggit.readthedocs.io/en/latest/
 
 TAGGIT_CASE_INSENSITIVE = True
+
+LOGIN_URL = 'profiles:signin'
+LOGIN_REDIRECT_URL = 'profiles:home'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('GOOGLE_OAUTH_CLIENT_ID')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('GOOGLE_OAUTH_CLIENT_SECRET')
