@@ -7,46 +7,53 @@
   <div class="col-sm-6">
     <h2>People Nearby</h2>
     <br/>
-  {% for user in users %}
-  <div class="card" style="width: 60rem;">
-    <div class="card-body">
-      <div class="row">
-        {% if user.photo %}
-        <img src="{{ user.photo.url }}" class="rounded-circle mx-auto d-block" width=340 height=280>
-        {% else %}
-        <img src="{{ user.photo }}" class="rounded-circle mx-auto d-block" width=340 height=280>
-        {% endif %}
-        <span class="col-sm-1"></span>
 
-        <div class="col">
-          <h5 class="card-title"><strong>{{ user.name }}</strong></h5>
-          <h6 class="card-subtitle mb-2 text-muted">{{ user.status }}</h6>
-          <br/>
-          <p class="card-text">
-            <h6><i class="fas fa-map-marker-alt"></i> {{ user.area }}</h6>
-            <h6><i class="fas fa-envelope"></i> {{ user.email }}</h6>
-            <h6>
-              {% for loop in "xxxxx" %}
-                {% if forloop.counter <= user.rating %}
-                <i class="far fa-star"></i>
-                {% endif %}
-              {% endfor %}
-            </h6>
-          </p>
+    {% if not found %}
+    <div class="alert alert-danger" role="alert">
+      No events found in your location
+    </div>
+    {% else %}
+      {% for user in users %}
+      <div class="card" style="width: 60rem;">
+        <div class="card-body">
+          <div class="row">
+            {% if user.photo %}
+            <img src="{{ user.photo.url }}" class="rounded-circle mx-auto d-block" width=340 height=280>
+            {% else %}
+            <img src="{{ user.photo }}" class="rounded-circle mx-auto d-block" width=340 height=280>
+            {% endif %}
+            <span class="col-sm-1"></span>
 
-          <!-- Social links -->
-          <br/>
-          <a class="btn btn-secondary" href="#">Connect</a>
-          <a class="btn btn-info" href="#">Message</a>
-        </div>
+            <div class="col">
+              <h5 class="card-title"><strong>{{ user.name }}</strong></h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ user.status }}</h6>
+              <br/>
+              <p class="card-text">
+                <h6><i class="fas fa-map-marker-alt"></i> {{ user.area }}</h6>
+                <h6><i class="fas fa-envelope"></i> {{ user.email }}</h6>
+                <h6>
+                  {% for loop in "xxxxx" %}
+                    {% if forloop.counter <= user.rating %}
+                    <i class="far fa-star"></i>
+                    {% endif %}
+                  {% endfor %}
+                </h6>
+              </p>
 
-        <div class="col" align="right">
-          <h6><i class="far fa-star"></i></h6>
+              <!-- Social links -->
+              <br/>
+              <a class="btn btn-secondary" href="#">Connect</a>
+              <a class="btn btn-info" href="#">Message</a>
+            </div>
+
+            <div class="col" align="right">
+              <h6><i class="far fa-star"></i></h6>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-  {% endfor %}
+      {% endfor %}
+    {% endif %}
   </div>
 </div>
 {% endblock %}
