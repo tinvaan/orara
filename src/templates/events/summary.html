@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div style="height:50px;"></div>
+
+<div class="row">
+  <div class="col-sm-6">
+    <h2>Events Nearby</h2>
+    <br/>
+
+    {% if not found %}
+    <div class="alert alert-danger" role="alert">
+      No events found in your location
+    </div>
+    {% else %}
+      {% for event in events %}
+      <div class="card" style="width: 60rem;">
+        <div class="card-body">
+          <div class="row">
+            {% if event.image %}
+            <img src="{{ event.image.url }}" class="mx-auto d-block" width=340 height=280>
+            {% else %}
+            <img src="{{ event.image }}" class="mx-auto d-block" width=340 height=280>
+            {% endif %}
+            <span class="col-sm-1"></span>
+
+            <div class="col">
+              <h5 class="card-title"><strong>{{ event.name }}</strong></h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ event.tags }}</h6>
+              <br/>
+              <p class="card-text">
+                <h6><i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}</h6>
+                <h6><i class="fas fa-envelope"></i> {{ event.contact.email }}</h6>
+              </p>
+
+              <!-- Social links -->
+              <br/>
+              <a class="btn btn-secondary" href="#">Register</a>
+            </div>
+
+            <div class="col" align="right">
+              <h6><i class="far fa-star"></i></h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

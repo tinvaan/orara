@@ -39,6 +39,7 @@ class OraraEvent(models.Model):
                                message="Format(15 digits): '+999999999'.")
     phone = models.CharField(verbose_name="Contact", validators=[validator],
                              max_length=17, blank=True)
+    image = models.ImageField(verbose_name="Event Image", blank=True, upload_to='events')
     tags = TaggableManager()
     categories = MultiSelectField(choices=EVENT_CATEGORIES, default="UN")
 
