@@ -1,5 +1,6 @@
 import json
 
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseNotFound,\
                         HttpResponseRedirect
@@ -12,7 +13,23 @@ from flocks.models import UserBookmarks, OraraConnections
 
 @login_required
 def summary(request):
-    return HttpResponseRedirect('/flocks/explore')
+    '''
+    Complete list of users in database
+    '''
+    users = []
+    context = {}
+    for user in OraraUser.objects.all():
+        if not user == request.user:
+            users.append({
+                'name': user.name(),
+                'area': user.area,
+                'status': user.status,
+                'phone': user.phone,
+                'email': user.email,
+                'photo': user.photo
+            })
+    context = {'found': True, 'users': users}
+    return render(request, 'flocks/summary.html', context)
 
 
 @login_required
@@ -28,7 +45,9 @@ def profile(request, name):
         'name': user.name(),
         'status': user.status,
         'area': user.area,
-        'phone': user.phone
+        'phone': user.phone,
+        'email': user.email,
+        'photo': user.photo
     }, indent=4), content_type="application/json")
 
 
@@ -40,39 +59,45 @@ def explore(request):
     '''
     users = []
 
-    # No filters are applicable if user hasn't registered any interests
+    # Has the user registered any interests ?
     try:
-        UserInterests.objects.get(user=request.user)
+        if UserInterests.objects.get(user=request.user):
+            interests_known = True
     except UserInterests.DoesNotExist:
-        for user in OraraUser.objects.all():
-            users.append({
-                'name': user.name(),
-                'area': user.area,
-                'status': user.status,
-                'phone': user.phone
-            })
-        return HttpResponse(json.dumps(users, indent=4),
-                            content_type="application/json")
+        interests_known = False
 
     # Filter by
     # 1) Location | TODO: Narrow down using lat/lon in next iteration
     # 2) Interests
     for user in OraraUser.objects.filter(area=request.user.area):
-        try:
-            interest = UserInterests.objects.get(user=user)
-            if not match_percentage(interest.user, request.user) == 0:
-                users.append({
-                    'name': user.name(),
-                    'area': user.area,
-                    'status': user.status,
-                    'phone': user.phone
-                })
-        except UserInterests.DoesNotExist:
-            pass
+        # List all users in proximity if user's interest are not known
+        if not interests_known:
+            users.append({
+                'name': user.name(),
+                'area': user.area,
+                'status': user.status,
+                'phone': user.phone,
+                'email': user.email,
+                'photo': user.photo
+            })
+        else:
+            # List users with matching interests
+            try:
+                interest = UserInterests.objects.get(user=user)
+                if not match_percentage(interest.user, request.user) == 0:
+                    users.append({
+                        'name': user.name(),
+                        'area': user.area,
+                        'status': user.status,
+                        'phone': user.phone,
+                        'email': user.email,
+                        'photo': user.photo
+                    })
+            except UserInterests.DoesNotExist:
+                pass
 
-    users = users if len(users) else {}
-    return HttpResponse(json.dumps(users, indent=4),
-                        content_type="application/json")
+    context = {'found': len(users) > 0, 'users': users}
+    return render(request, 'flocks/summary.html', context)
 
 
 @login_required
