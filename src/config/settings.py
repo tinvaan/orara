@@ -47,6 +47,7 @@ ORARA_APPS = [
 
 THIRD_PARTY_APPS = [
     'taggit',
+    'social_django',
     'multiselectfield'
 ]
 
@@ -76,6 +77,10 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # social-auth-app-django requisites
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect'
             ],
         },
     },
@@ -114,6 +119,20 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+# Specify authentication backends for social-auth-app-django
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',       # Google authentication
+    'social_core.backends.google.GoogleOpenId',      # Google authentication
+    'social_core.backends.google.GoogleOAuth2',      # Google authentication
+    'social_core.backends.facebook.FacebookOAuth2',  # Facebook authentication
+
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+AUTH_USER_MODEL = 'profiles.OraraUser'
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -140,5 +159,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, '../media')
 # https://django-taggit.readthedocs.io/en/latest/
 
 TAGGIT_CASE_INSENSITIVE = True
-
-AUTH_USER_MODEL = 'profiles.OraraUser'

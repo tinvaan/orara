@@ -14,11 +14,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf.urls import url
 from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('profiles.urls', namespace='profile')),
     path('flocks/', include('flocks.urls', namespace='flocks')),
-    path('events/', include('events.urls', namespace='events'))
+    path('events/', include('events.urls', namespace='events')),
+
+    # social-auth-app-django url endpoints
+    url(r'^auth/', include('social_django.urls', namespace='social'))
 ]
