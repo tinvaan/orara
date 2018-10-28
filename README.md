@@ -4,6 +4,14 @@ A minimalsitic social network that helps you find;
 - What's happening around you ?
 - What are people around you upto ?
 
+# Notes
+What are the questions that we need to ask users ?
+1. Do you want to learn more about an event happening around you, based on your interest ?
+2. Do people want to connect with new people over an event or activity ? If yes:
+    -- Before
+    -- During
+    -- After
+
 ## How to run ?
 
 1. Install `Python3.x`(`3.6 +`, preferably) and it's corresponding package manager - `pip`
