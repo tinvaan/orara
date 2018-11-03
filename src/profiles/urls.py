@@ -9,7 +9,9 @@ app_name = 'profiles'
 urlpatterns = [
     path('', views.home, name='home'),
     path('login', views.signin, name='signin'),
-    path('logout', views.signout, name='signout')
+    path('logout', views.signout, name='signout'),
+    path('profiles/<str:username>', views.profile, name='profile'),
+    path('profiles/<str:username>/edit', views.profile, name='edit')
 ]
 
 if settings.DEBUG:
