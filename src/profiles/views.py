@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
 from profiles.models import OraraUser
+from profiles.utils import interested_events, registered_events
 
 
 def signin(request):
@@ -34,7 +35,8 @@ def profile(request, username):
         except OraraUser.DoesNotExist:
             return HttpResponseNotFound("Profile info for '{}' not found"\
                                         .format(username))
-        return render(request, 'profiles/profile.html', {
+
+        context = {
             'user': {
                 'username': username,
                 'name': user.name(),
@@ -44,8 +46,13 @@ def profile(request, username):
                 'phone': user.phone,
                 'email': user.email,
                 'photo': user.photo
+            },
+            'events': {
+                'interested': interested_events(user),
+                'registered': registered_events(user)
             }
-        })
+        }
+        return render(request, 'profiles/profile.html', context)
     else:
         return HttpResponseNotFound("Profile infor for '{}' not found"\
                                     .format(username))

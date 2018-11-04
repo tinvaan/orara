@@ -63,6 +63,21 @@ class OraraEvent(models.Model):
         super().save(*args, **kwargs)
 
 
+class EventLikes(models.Model):
+    '''
+    Events liked by a user
+    '''
+    user = models.ForeignKey(OraraUser, on_delete=models.CASCADE)
+    event = models.ForeignKey(OraraEvent, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "Interested"
+        verbose_name_plural = "Interested"
+
+    def __str__(self):
+        return "'{}' - '{}".format(self.event, self.user)
+
+
 class EventCustomers(models.Model):
     '''
     Customers going to an event

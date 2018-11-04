@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseNotFound
 
 from flocks.utils import has_connection
-from profiles.utils import events_for
 from profiles.models import UserInterests
+from profiles.utils import interested_events
 from events.models import OraraEvent, EventInvites, EventCustomers
 
 
@@ -46,7 +46,7 @@ def explore(request):
     '''
     try:
         user = UserInterests.objects.get(user=request.user)
-        events = events_for(user)
+        events = interested_events(user)
     except UserInterests.DoesNotExist:
         events = OraraEvent.objects.all()
 
