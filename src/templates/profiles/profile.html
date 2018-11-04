@@ -32,5 +32,93 @@
   </div>
 
   <span class="col-sm-1"></span>
+
+  <div class="col-sm-7">
+    <h2 class="h2">Events</h2>
+    <br/>
+
+    <ul class="nav nav-tabs" id="eventsTab" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" id="interested" data-toggle="tab" href="#interests" role="tab" aria-controls="interest" aria-selected="true">Interested</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" id="registered" data-toggle="tab" href="#registers" role="tab" aria-controls="register" aria-selected="false">Registered</a>
+      </li>
+    </ul>
+    <div class="tab-content">
+      <br/>
+      <div class="tab-pane active" id="interests" role="tabpanel" aria-labelledby="interested">
+        {% if events.interested|length == 0 %}
+          <div class="alert alert-danger" role="alert">
+            {{ user.first_name }} hasn't liked any events yet.
+          </div>
+        {% else %}
+          {% for event in events.interested %}
+          <div class="card" style="width: 36rem;">
+            <div class="card-body">
+              <div class="row">
+                <img class="mx-auto d-block" src="{{ event.image.url }}" width=80 height=120>
+                <div class="col">
+                  <h5 class="card-title">
+                    <strong>{{ event.name }}</strong>
+                  </h5>
+                  <h6 class="card-subtitle mb-2 text-muted">
+                    <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;{{ event.venue.name }}<br/>
+                    <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{{ event.date }}<br/>
+                    <i class="fas fa-globe"></i>&nbsp;&nbsp;{{ event.contact.website }}
+                  </h6>
+                </div>
+              </div>
+              <br/>
+              <p class="card-text mb-0">{{ event.description }}</p>
+              <div align="right">
+                <a href="#" class="card-link"><i class="far fa-thumbs-up"></i></a>
+                <a href="#" class="card-link"><i class="fas fa-share-alt"></i></a>
+                <a href="#" class="card-link"><i class="fas fa-envelope"></i></a>
+              </div>
+            </div>
+          </div>
+          <br/>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div class="tab-pane" id="registers" role="tabpanel" aria-labelledby="registered">
+        {% if events.registered|length == 0 %}
+          <div class="alert alert-danger" role="alert">
+            {{ user.first_name }} hasn't registered for any events yet.
+          </div>
+        {% else %}
+          {% for event in events.registered %}
+          <div class="card" style="width: 36rem;">
+            <div class="card-body">
+              <div class="row">
+                <img class="mx-auto d-block" src="{{ event.image.url }}" width=80 height=120>
+                <div class="col">
+                  <h5 class="card-title">
+                    <strong>{{ event.name }}</strong>
+                  </h5>
+                  <h6 class="card-subtitle mb-2 text-muted">
+                    <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;{{ event.venue.name }}<br/>
+                    <i class="fas fa-calendar-alt"></i>&nbsp;&nbsp;{{ event.date }}<br/>
+                    <i class="fas fa-globe"></i>&nbsp;&nbsp;{{ event.contact.website }}
+                  </h6>
+                </div>
+              </div>
+              <br/>
+              <p class="card-text mb-0">{{ event.description }}</p>
+              <div align="right">
+                <a href="#" class="card-link"><i class="far fa-thumbs-up"></i></a>
+                <a href="#" class="card-link"><i class="fas fa-share-alt"></i></a>
+                <a href="#" class="card-link"><i class="fas fa-envelope"></i></a>
+              </div>
+            </div>
+          </div>
+          <br/>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
 </div>
 {% endblock content %}
