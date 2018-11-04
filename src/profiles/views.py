@@ -4,13 +4,14 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
 from profiles.models import OraraUser
+from profiles.contexts import profile_info, social_info
 from profiles.utils import interested_events, registered_events
 
 
 def signin(request):
     user = authenticate(username=request.POST.get('user_name'),
                         password=request.POST.get('user_pass'))
-    if user is  not None:
+    if user is not None:
         login(request, user)
         return home(request)
     return render(request, 'profiles/login.html')
@@ -24,7 +25,10 @@ def signout(request):
 
 @login_required
 def home(request):
-    return render(request, 'base.html')
+    return render(request, 'home.html', {
+        'profile': profile_info(request.user),
+        'social': social_info(request.user)
+    })
 
 
 @login_required
@@ -37,6 +41,8 @@ def profile(request, username):
                                         .format(username))
 
         context = {
+            'profile': profile_info(user),
+            'social': social_info(user),
             'user': {
                 'username': username,
                 'name': user.name(),

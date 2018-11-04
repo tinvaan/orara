@@ -7,6 +7,7 @@ from django.http import HttpResponse, HttpResponseNotFound
 from flocks.utils import has_connection
 from profiles.models import UserInterests
 from profiles.utils import interested_events
+from profiles.contexts import profile_info, social_info
 from events.models import OraraEvent, EventInvites, EventCustomers
 
 
@@ -34,7 +35,12 @@ def complete(request):
             'date': str(event.timestamp),
             'tags': list(event.tags.names())
         })
-    context = {'found': len(response) > 0, 'events': response}
+    context = {
+        'profile': profile_info(request.user),
+        'social': social_info(request.user),
+        'events': response,
+        'found': len(response) > 0
+    }
     return render(request, 'events/summary.html', context)
 
 
@@ -72,7 +78,12 @@ def explore(request):
                 'tags': list(event.tags.names())
             })
 
-    context = {'found': len(response) > 0, 'events': response}
+    context = {
+        'profile': profile_info(request.user),
+        'social': social_info(request.user),
+        'events': response,
+        'found': len(response) > 0
+    }
     return render(request, 'events/summary.html', context)
 
 
