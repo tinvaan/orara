@@ -33,32 +33,28 @@ def home(request):
 
 @login_required
 def profile(request, username):
-    if request.user.username == username:
-        try:
-            user = OraraUser.objects.get(username=username)
-        except OraraUser.DoesNotExist:
-            return HttpResponseNotFound("Profile info for '{}' not found"\
-                                        .format(username))
-
-        context = {
-            'profile': profile_info(user),
-            'social': social_info(user),
-            'user': {
-                'username': username,
-                'name': user.name(),
-                'first_name': user.first_name,
-                'status': user.status,
-                'area': user.area,
-                'phone': user.phone,
-                'email': user.email,
-                'photo': user.photo
-            },
-            'events': {
-                'interested': interested_events(user),
-                'registered': registered_events(user)
-            }
-        }
-        return render(request, 'profiles/profile.html', context)
-    else:
-        return HttpResponseNotFound("Profile infor for '{}' not found"\
+    try:
+        user = OraraUser.objects.get(username=username)
+    except OraraUser.DoesNotExist:
+        return HttpResponseNotFound("Profile info for '{}' not found"\
                                     .format(username))
+
+    context = {
+        'profile': profile_info(user),
+        'social': social_info(user),
+        'user': {
+            'username': username,
+            'name': user.name(),
+            'first_name': user.first_name,
+            'status': user.status,
+            'area': user.area,
+            'phone': user.phone,
+            'email': user.email,
+            'photo': user.photo
+        },
+        'events': {
+            'interested': interested_events(user),
+            'registered': registered_events(user)
+        }
+    }
+    return render(request, 'profiles/profile.html', context)
