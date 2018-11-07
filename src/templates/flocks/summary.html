@@ -25,9 +25,11 @@
             <span class="col-sm-1"></span>
 
             <div class="col">
-              <h5 class="card-title"><strong>{{ user.name }}</strong></h5>
-              <h6 class="card-subtitle mb-2 text-muted">{{ user.status }}</h6>
-              <br/>
+              <a href="{% url 'profiles:info' user.username %}">
+                <h5 class="card-title"><strong>{{ user.name }}</strong></h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ user.username }}</h6>
+                <br/>
+              </a>
               <p class="card-text">
                 <h6><i class="fas fa-map-marker-alt"></i> {{ user.area }}</h6>
                 <h6><i class="fas fa-envelope"></i> {{ user.email }}</h6>
@@ -42,8 +44,8 @@
 
               <!-- Social links -->
               <br/>
-              <a class="btn btn-secondary" href="#">Connect</a>
-              <a class="btn btn-info" href="#">Message</a>
+              <a class="btn btn-primary" href="#">Connect</a>
+              <a class="btn btn-secondary" href="#">Message</a>
             </div>
 
             <div class="col" align="right">

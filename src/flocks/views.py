@@ -22,6 +22,7 @@ def summary(request):
     for user in OraraUser.objects.all():
         if not user == request.user:
             users.append({
+                'username': user.username,
                 'name': user.name(),
                 'area': user.area,
                 'status': user.status,
@@ -43,6 +44,7 @@ def profile(request, name):
     except OraraUser.DoesNotExist:
         return HttpResponseNotFound("User '{}' not found".format(name))
     return HttpResponse(json.dumps({
+        'username': user.username,
         'name': user.name(),
         'status': user.status,
         'area': user.area,
@@ -74,6 +76,7 @@ def explore(request):
         # List all users in proximity if user's interest are not known
         if not interests_known:
             users.append({
+                'username': user.username,
                 'name': user.name(),
                 'area': user.area,
                 'status': user.status,
@@ -87,6 +90,7 @@ def explore(request):
                 interest = UserInterests.objects.get(user=user)
                 if not match_percentage(interest.user, request.user) == 0:
                     users.append({
+                        'username': user.username,
                         'name': user.name(),
                         'area': user.area,
                         'status': user.status,
@@ -127,6 +131,7 @@ def bookmarks(request):
     response = []
     for bookmark in UserBookmarks.objects.all():
         response.append({
+            'username': bookmark.bookmark.username,
             'name': bookmark.bookmark.name(),
             'area': bookmark.bookmark.area,
             'status': bookmark.bookmark.status,
@@ -146,6 +151,7 @@ def connections(request):
     response = []
     for connection in OraraConnections.objects.filter(user1=request.user, approved=True):
         response.append({
+            'username': connection.user2.username,
             'name': connection.user2.name(),
             'area': connection.user2.area,
             'status': connection.user2.status,
@@ -153,6 +159,7 @@ def connections(request):
         })
     for connection in OraraConnections.objects.filter(user2=request.user, approved=True):
         response.append({
+            'username': connection.user1.username,
             'name': connection.user1.name(),
             'area': connection.user2.area,
             'status': connection.user2.status,
