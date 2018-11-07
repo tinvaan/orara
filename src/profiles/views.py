@@ -47,9 +47,10 @@ def profile(request, username):
             'name': user.name(),
             'first_name': user.first_name,
             'status': user.status,
+            'bio': user.bio,
             'area': user.area,
-            'phone': user.phone,
-            'email': user.email,
+            'college': user.college,
+            'workplace': user.workplace,
             'photo': user.photo
         },
         'events': {

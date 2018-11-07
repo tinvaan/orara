@@ -18,31 +18,28 @@
         <div class="card-body">
           <div class="row">
             {% if user.photo %}
-            <img src="{{ user.photo.url }}" class="rounded-circle mx-auto d-block" width=340 height=280>
+            <img src="{{ user.photo.url }}" class="rounded-circle mx-auto d-block" width=240 height=240>
             {% else %}
-            <img src="{{ user.photo }}" class="rounded-circle mx-auto d-block" width=340 height=280>
+            <img src="{{ user.photo }}" class="rounded-circle mx-auto d-block" width=240 height=240>
             {% endif %}
             <span class="col-sm-1"></span>
 
             <div class="col">
               <a href="{% url 'profiles:info' user.username %}">
                 <h5 class="card-title"><strong>{{ user.name }}</strong></h5>
-                <h6 class="card-subtitle mb-2 text-muted">{{ user.username }}</h6>
+                <h6 class="card-subtitle mb-2 text-muted">@{{ user.username }}</h6>
                 <br/>
               </a>
               <p class="card-text">
-                <h6><i class="fas fa-map-marker-alt"></i> {{ user.area }}</h6>
-                <h6><i class="fas fa-envelope"></i> {{ user.email }}</h6>
-                <h6>
-                  {% for loop in "xxxxx" %}
-                    {% if forloop.counter <= user.rating %}
-                    <i class="far fa-star"></i>
-                    {% endif %}
-                  {% endfor %}
-                </h6>
+                <p class="text-monospace"><mark> {{ user.bio }} </mark></p>
+                {% if user.workplace != "NA" %}
+                  <h6><i class="fas fa-briefcase"></i> {{ user.workplace }}</h6>
+                {% endif %}
+                {% if user.college != "NA" %}
+                  <h6><i class="fas fa-university"></i> {{ user.college }}</h6>
+                {% endif %}
               </p>
 
-              <!-- Social links -->
               <br/>
               <a class="btn btn-primary" href="#">Connect</a>
               <a class="btn btn-secondary" href="#">Message</a>

@@ -24,10 +24,11 @@ def summary(request):
             users.append({
                 'username': user.username,
                 'name': user.name(),
+                'bio': user.bio,
                 'area': user.area,
                 'status': user.status,
-                'phone': user.phone,
-                'email': user.email,
+                'college': user.college,
+                'workplace': user.workplace,
                 'photo': user.photo
             })
     context = {'found': True, 'users': users}
@@ -46,10 +47,11 @@ def profile(request, name):
     return HttpResponse(json.dumps({
         'username': user.username,
         'name': user.name(),
+        'bio': user.bio,
         'status': user.status,
         'area': user.area,
-        'phone': user.phone,
-        'email': user.email,
+        'college': user.college,
+        'workplace': user.workplace,
         'photo': user.photo
     }, indent=4), content_type="application/json")
 
@@ -79,9 +81,10 @@ def explore(request):
                 'username': user.username,
                 'name': user.name(),
                 'area': user.area,
+                'bio': user.bio,
                 'status': user.status,
-                'phone': user.phone,
-                'email': user.email,
+                'college': user.college,
+                'workplace': user.workplace,
                 'photo': user.photo
             })
         else:
@@ -93,9 +96,10 @@ def explore(request):
                         'username': user.username,
                         'name': user.name(),
                         'area': user.area,
+                        'bio': user.bio,
                         'status': user.status,
-                        'phone': user.phone,
-                        'email': user.email,
+                        'college': user.college,
+                        'workplace': user.workplace,
                         'photo': user.photo
                     })
             except UserInterests.DoesNotExist:
@@ -135,7 +139,8 @@ def bookmarks(request):
             'name': bookmark.bookmark.name(),
             'area': bookmark.bookmark.area,
             'status': bookmark.bookmark.status,
-            'phone': bookmark.bookmark.phone
+            'college': bookmark.bookmark.college,
+            'workplace': bookmark.bookmark.workplace
         })
 
     response = {} if len(response) == 0 else response
@@ -155,15 +160,17 @@ def connections(request):
             'name': connection.user2.name(),
             'area': connection.user2.area,
             'status': connection.user2.status,
-            'phone': connection.user2.phone
+            'college': connection.user2.college,
+            'workplace': connection.user2.workplace
         })
     for connection in OraraConnections.objects.filter(user2=request.user, approved=True):
         response.append({
             'username': connection.user1.username,
             'name': connection.user1.name(),
-            'area': connection.user2.area,
-            'status': connection.user2.status,
-            'phone': connection.user2.phone
+            'area': connection.user1.area,
+            'status': connection.user1.status,
+            'college': connection.user1.college,
+            'workplace': connection.user1.workplace
         })
 
     response = {} if len(response) == 0 else response

@@ -20,6 +20,8 @@ INTERESTS = (
 
 class OraraUser(AbstractUser):
     bio = models.CharField(verbose_name="Short Description", blank=True, max_length=240, default='None')
+    college = models.CharField(verbose_name="College", blank=True, max_length=80, default="NA")
+    workplace = models.CharField(verbose_name="Workplace", blank=True, max_length=60, default='NA')
     photo = models.ImageField(verbose_name="Profile photo", blank=True, upload_to='profiles')
     validator = RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                message="Format(15 digits): '+999999999'.")
