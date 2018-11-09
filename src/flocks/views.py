@@ -31,7 +31,12 @@ def summary(request):
                 'workplace': user.workplace,
                 'photo': user.photo
             })
-    context = {'found': True, 'users': users}
+    context = {
+        'profile': profile_info(request.user),
+        'social': social_info(request.user),
+        'found': True,
+        'users': users,
+    }
     return render(request, 'flocks/summary.html', context)
 
 
