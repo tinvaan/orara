@@ -13,7 +13,7 @@
       No events found in your location
     </div>
     {% else %}
-      {% for event in events %}
+      {% for event in events.internal %}
       <div class="card" style="width: 60rem;">
         <div class="card-body">
           <div class="row">
@@ -30,6 +30,35 @@
               <br/>
               <p class="card-text">
                 <h6><i class="fas fa-map-marker-alt"></i> {{ event.venue.name }}</h6>
+                <h6><i class="fas fa-envelope"></i> {{ event.contact.email }}</h6>
+              </p>
+
+              <!-- Social links -->
+              <br/>
+              <a class="btn btn-secondary" href="#">Register</a>
+            </div>
+
+            <div class="col" align="right">
+              <h6><i class="far fa-star"></i></h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+      {% for event in events.external %}
+      <div class="card" style="width: 60rem;">
+        <div class="card-body">
+          <div class="row">
+            <img src="{{ event.image }}" class="mx-auto d-block" width=340 height=280>
+            <span class="col-sm-1"></span>
+
+            <div class="col">
+              <h5 class="card-title"><strong>{{ event.name }}</strong></h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ event.tags }}</h6>
+              <br/>
+              <p class="card-text">
+                <h6><i class="fas fa-map-marker-alt"></i> {{ event.venues.name }}</h6>
                 <h6><i class="fas fa-envelope"></i> {{ event.contact.email }}</h6>
               </p>
 

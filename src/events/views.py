@@ -8,6 +8,7 @@ from flocks.utils import has_connection
 from profiles.models import UserInterests
 from profiles.utils import interested_events
 from profiles.contexts import profile_info, social_info
+from events.external.sources.insider import get_events
 from events.models import OraraEvent, EventInvites, EventCustomers
 
 
@@ -57,6 +58,7 @@ def explore(request):
         events = OraraEvent.objects.all()
 
     response = []
+    external_events = get_events()
     for event in events:
         if event.venue_area == request.user.area:
             response.append({
@@ -81,8 +83,11 @@ def explore(request):
     context = {
         'profile': profile_info(request.user),
         'social': social_info(request.user),
-        'events': response,
-        'found': len(response) > 0
+        'events': {
+            'internal': response,
+            'external': get_events()
+        },
+        'found': len(response) > 0 or len(external_events) > 0
     }
     return render(request, 'events/summary.html', context)
 
