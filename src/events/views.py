@@ -8,7 +8,7 @@ from flocks.utils import has_connection
 from profiles.models import UserInterests
 from profiles.utils import interested_events
 from profiles.contexts import profile_info, social_info
-from events.external.sources.insider import get_events
+from events.external.sources.aggregate import all
 from events.models import OraraEvent, EventInvites, EventCustomers
 
 
@@ -39,7 +39,10 @@ def complete(request):
     context = {
         'profile': profile_info(request.user),
         'social': social_info(request.user),
-        'events': response,
+        'events': {
+            'internal': response,
+            'external': []  # TODO: Append external events(?)
+        },
         'found': len(response) > 0
     }
     return render(request, 'events/summary.html', context)
@@ -58,7 +61,7 @@ def explore(request):
         events = OraraEvent.objects.all()
 
     response = []
-    external_events = get_events()
+    external_events = all(request.user.area)
     for event in events:
         if event.venue_area == request.user.area:
             response.append({
@@ -85,7 +88,8 @@ def explore(request):
         'social': social_info(request.user),
         'events': {
             'internal': response,
-            'external': get_events()
+            # NOTE: External events support disabled temporarily
+            # 'external': external_events
         },
         'found': len(response) > 0 or len(external_events) > 0
     }

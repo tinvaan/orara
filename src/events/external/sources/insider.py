@@ -27,7 +27,7 @@ def get_carousel_event(data, city=None, tags=None):
                     'venues': venues,
                 })
     except KeyError as err:
-        print("Exception thrown in method 'get_carousel_image()' : ", err)
+        print("Exception - 'get_carousel_image()' : ", err)
     return events
 
 
@@ -41,7 +41,7 @@ def get_featured_events(data, city=None, tags=None):
             _event['location'] = event['map_id']
             _event['description'] = event['description']
         except KeyError as err:
-            print(index, "\tException thrown in method 'get_featured_events()' : ", err)
+            print(index, "\tException - 'get_featured_events()' : ", err)
         events.append(_event)
     return events
 
@@ -68,7 +68,7 @@ def get_listed_events(data, city=None, tags=None):
                     'venues': venues
                 })
     except KeyError as err:
-        print("Exception thrown in method 'get_listed_events()' : ", err)
+        print("Exception - 'get_listed_events()' : ", err)
 
     return events
 
@@ -90,7 +90,7 @@ def get_events(city=None, tags=None):
         else:
             print("Failed to fetch events from insider API : ", response.text)
     except KeyError as err:
-        print("Exception thrown in method 'get_events()' : ", err)
+        print("Exception - 'get_events()' : ", err)
 
     return events
 
