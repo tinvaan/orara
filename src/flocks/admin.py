@@ -4,7 +4,7 @@ from flocks.models import OraraConnections, UserBookmarks
 
 
 class OraraConnectionsAdmin(admin.ModelAdmin):
-    list_display = ('user1', 'user2')
+    list_display = ('user1', 'user2', 'approved')
 
 
 class UserBookmarksAdmin(admin.ModelAdmin):

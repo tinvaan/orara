@@ -10,50 +10,88 @@
 
     {% if not found %}
     <div class="alert alert-danger" role="alert">
-      No events found in your location
+      No active flocks found in your location :(
     </div>
     {% else %}
-      {% for user in users %}
-      <div class="card" style="width: 60rem;">
-        <div class="card-body">
-          <div class="row">
-            {% if user.photo %}
-            <img src="{{ user.photo.url }}" class="rounded-circle mx-auto d-block" width=180 height=160>
-            {% else %}
-            <img src="{{ user.photo }}" class="rounded-circle mx-auto d-block" width=180 height=160>
-            {% endif %}
-            <span class="col-sm-1"></span>
-
-            <div class="col">
-              <a href="{% url 'profiles:info' user.username %}">
-                <h5 class="card-title"><strong>{{ user.name }}</strong></h5>
-              </a>
-              <h6 class="card-subtitle mb-2 text-muted">{{ user.bio }}</h6>
-              <br/>
-              <p class="card-text">
-                <p class="text-monospace"><i class="fas fa-podcast"></i>&nbsp;<mark> {{ user.status }} </mark></p>
-                {% comment %}// Keep the summary page minimal
-                {% if user.workplace != "NA" %}
-                  <h6><i class="fas fa-briefcase"></i> {{ user.workplace }}</h6>
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <a class="nav-item nav-link active" id="nav-connections-tab" data-toggle="tab" href="#nav-connections" role="tab" aria-controls="nav-connections" aria-selected="true">Connections</a>
+          <a class="nav-item nav-link" id="nav-others-tab" data-toggle="tab" href="#nav-others" role="tab" aria-controls="nav-others" aria-selected="false">Others</a>
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-connections" role="tabpanel" aria-labelledby="nav-connections-tab">
+          {% for user in connections %}
+          <div class="card" style="width: 60rem;">
+            <div class="card-body">
+              <div class="row">
+                {% if user.photo %}
+                <img src="{{ user.photo.url }}" class="rounded-circle mx-auto d-block" width=180 height=160>
+                {% else %}
+                <img src="{{ user.photo }}" class="rounded-circle mx-auto d-block" width=180 height=160>
                 {% endif %}
-                {% if user.college != "NA" %}
-                  <h6><i class="fas fa-university"></i> {{ user.college }}</h6>
-                {% endif %}
-                {% endcomment %}
-              </p>
+                <span class="col-sm-1"></span>
 
-              <br/>
-              <a class="btn btn-primary" href="#">Connect</a>&nbsp;
-              <a class="btn btn-secondary" href="#">Message</a>
-            </div>
+                <div class="col">
+                  <a href="{% url 'profiles:info' user.username %}">
+                    <h5 class="card-title"><strong>{{ user.name }}</strong></h5>
+                  </a>
+                  <h6 class="card-subtitle mb-2 text-muted">{{ user.bio }}</h6>
+                  <br/>
+                  <p class="card-text">
+                    <p class="text-monospace"><i class="fas fa-podcast"></i>&nbsp;<mark> {{ user.status }} </mark></p>
+                  </p>
 
-            <div class="col" align="right">
-              <h6><i class="far fa-star"></i></h6>
+                  <br/>
+                  <a class="btn btn-primary" href="#">Pair</a>&nbsp;
+                  <a class="btn btn-secondary" href="#">Message</a>
+                </div>
+
+                <div class="col" align="right">
+                  <h6><i class="far fa-star"></i></h6>
+                </div>
+              </div>
             </div>
           </div>
+          {% endfor %}
+        </div>
+        <div class="tab-pane fade" id="nav-others" role="tabpanel" aria-labelledby="nav-others-tab">
+          {% for user in users %}
+          <br/>
+          <div class="card" style="width: 60rem;">
+            <div class="card-body">
+              <div class="row">
+                {% if user.photo %}
+                <img src="{{ user.photo.url }}" class="rounded-circle mx-auto d-block" width=180 height=160>
+                {% else %}
+                <img src="{{ user.photo }}" class="rounded-circle mx-auto d-block" width=180 height=160>
+                {% endif %}
+                <span class="col-sm-1"></span>
+
+                <div class="col">
+                  <a href="{% url 'profiles:info' user.username %}">
+                    <h5 class="card-title"><strong>{{ user.name }}</strong></h5>
+                  </a>
+                  <h6 class="card-subtitle mb-2 text-muted">{{ user.bio }}</h6>
+                  <br/>
+                  <p class="card-text">
+                    <p class="text-monospace"><i class="fas fa-podcast"></i>&nbsp;<mark> {{ user.status }} </mark></p>
+                  </p>
+
+                  <br/>
+                  <a class="btn btn-primary" href="#">Connect</a>&nbsp;
+                  <a class="btn btn-secondary" href="#">Message</a>
+                </div>
+
+                <div class="col" align="right">
+                  <h6><i class="far fa-star"></i></h6>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
         </div>
       </div>
-      {% endfor %}
     {% endif %}
   </div>
 </div>

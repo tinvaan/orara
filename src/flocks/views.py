@@ -8,8 +8,8 @@ from django.http import HttpResponse, HttpResponseNotFound,\
 from events.models import EventCustomers
 from profiles.models import OraraUser, UserInterests
 from profiles.contexts import profile_info, social_info
-from flocks.utils import match_percentage, get_customers
 from flocks.models import UserBookmarks, OraraConnections
+from flocks.utils import segregate, match_percentage, get_customers
 
 
 @login_required
@@ -110,10 +110,12 @@ def explore(request):
             except UserInterests.DoesNotExist:
                 pass
 
+    friends, others = segregate(request.user, users)
     context = {
         'profile': profile_info(request.user),
         'social': social_info(request.user),
-        'users': users,
+        'users': others,
+        'connections': friends,
         'found': len(users) > 0
     }
     return render(request, 'flocks/summary.html', context)

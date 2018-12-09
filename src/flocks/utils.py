@@ -1,5 +1,5 @@
 from profiles.models import INTERESTS
-from profiles.models import UserInterests
+from profiles.models import OraraUser, UserInterests
 from events.models import EventCustomers
 from flocks.models import OraraConnections, UserBookmarks
 
@@ -41,3 +41,26 @@ def has_bookmark(user1, user2):
     except UserBookmarks.DoesNotExist:
         return False
     return True
+
+
+def segregate(user, users):
+    '''
+    Divide a list of users into friends(connections) and strangers
+    '''
+    others = []
+    connections = []
+
+    for item in users:
+        try:
+            obj = OraraUser.objects.get(username=item['username'])
+            if has_connection(user, obj):
+                connections.append(item)
+            elif item['username'] == user.username:
+                # Don't show self
+                pass
+            else:
+                others.append(item)
+        except OraraUser.DoesNotExist:
+            pass
+
+    return connections, others
