@@ -10,17 +10,12 @@
     <br/>
     {% endif %}
     <h4 class="h4"><strong>{{ user.name }}</strong></h4>
-    <h5 class="h5"></h5><em>@{{ user.username }}</em></h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{ user.bio }}</h6>
     <br/><br/>
     <p class="text-monospace">
       <i class="fas fa-podcast"></i>&nbsp;<mark>{{ user.status }}</mark>
     </p>
     <ul class="list-group list-group-flush">
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        <span>
-          <footer class="blockquote-footer">{{ user.bio }}</footer>
-        </span>
-      </li>
       <li class="list-group-item d-flex justify-content-between align-items-center">
         <span>
           <i class="fas fa-map-marker-alt"></i>&nbsp;&nbsp;{{ user.area }}

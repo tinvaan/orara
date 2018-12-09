@@ -18,30 +18,32 @@
         <div class="card-body">
           <div class="row">
             {% if user.photo %}
-            <img src="{{ user.photo.url }}" class="rounded-circle mx-auto d-block" width=240 height=240>
+            <img src="{{ user.photo.url }}" class="rounded-circle mx-auto d-block" width=180 height=160>
             {% else %}
-            <img src="{{ user.photo }}" class="rounded-circle mx-auto d-block" width=240 height=240>
+            <img src="{{ user.photo }}" class="rounded-circle mx-auto d-block" width=180 height=160>
             {% endif %}
             <span class="col-sm-1"></span>
 
             <div class="col">
               <a href="{% url 'profiles:info' user.username %}">
                 <h5 class="card-title"><strong>{{ user.name }}</strong></h5>
-                <h6 class="card-subtitle mb-2 text-muted">@{{ user.username }}</h6>
-                <br/>
               </a>
+              <h6 class="card-subtitle mb-2 text-muted">{{ user.bio }}</h6>
+              <br/>
               <p class="card-text">
-                <p class="text-monospace"><mark> {{ user.bio }} </mark></p>
+                <p class="text-monospace"><i class="fas fa-podcast"></i>&nbsp;<mark> {{ user.status }} </mark></p>
+                {% comment %}// Keep the summary page minimal
                 {% if user.workplace != "NA" %}
                   <h6><i class="fas fa-briefcase"></i> {{ user.workplace }}</h6>
                 {% endif %}
                 {% if user.college != "NA" %}
                   <h6><i class="fas fa-university"></i> {{ user.college }}</h6>
                 {% endif %}
+                {% endcomment %}
               </p>
 
               <br/>
-              <a class="btn btn-primary" href="#">Connect</a>
+              <a class="btn btn-primary" href="#">Connect</a>&nbsp;
               <a class="btn btn-secondary" href="#">Message</a>
             </div>
 
