@@ -31,7 +31,7 @@ def has_connection(user1, user2):
     try:
         OraraConnections.objects.get(user1=user1, user2=user2)
     except OraraConnections.DoesNotExist:
-        return False
+        return user1 == user2
     return True
 
 
@@ -53,11 +53,11 @@ def segregate(user, users):
     for item in users:
         try:
             obj = OraraUser.objects.get(username=item['username'])
-            if has_connection(user, obj):
-                connections.append(item)
-            elif item['username'] == user.username:
+            if item['username'] == user.username:
                 # Don't show self
                 pass
+            elif has_connection(user, obj):
+                connections.append(item)
             else:
                 others.append(item)
         except OraraUser.DoesNotExist:

@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
+from flocks.utils import has_connection
 from profiles.models import OraraUser
 from profiles.contexts import profile_info, social_info
 from profiles.utils import interested_events, registered_events
@@ -40,7 +41,7 @@ def profile(request, username):
                                     .format(username))
 
     context = {
-        'profile': profile_info(user),
+        'profile': profile_info(request.user),
         'social': social_info(user),
         'user': {
             'username': username,
@@ -56,6 +57,8 @@ def profile(request, username):
         'events': {
             'interested': interested_events(user),
             'registered': registered_events(user)
-        }
+        },
+        'owner': request.user == user,
+        'connection': has_connection(request.user, user)
     }
     return render(request, 'profiles/profile.html', context)

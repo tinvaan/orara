@@ -38,8 +38,16 @@
     </ul>
 
     <br/>
-    <a class="btn btn-primary" href="#">Connect</a>
-    <a class="btn btn-secondary" href="#">Message</a>
+    {% if owner  %}
+      <a class="btn btn-primary" href="#">Edit</a>
+    {% else %}
+      {% if not connection %}
+        <a class="btn btn-primary" href="#">Connect</a>
+      {% else %}
+        <a class="btn btn-danger" href="#">Block</a>
+      {% endif %}
+      <a class="btn btn-secondary" href="#">Message</a>
+    {% endif %}
   </div>
 
   <span class="col-sm-1"></span>
