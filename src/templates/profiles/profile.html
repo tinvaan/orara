@@ -9,9 +9,19 @@
     <img class="rounded-circle mx-auto d-block" src="{{ user.photo.url }}" width=240 height=240>
     <br/>
     {% endif %}
+
     <h4 class="h4"><strong>{{ user.name }}</strong></h4>
     <h6 class="card-subtitle mb-2 text-muted">{{ user.bio }}</h6>
-    <br/><br/>
+    <br/>
+    <div class="row">
+      <div class="col-sm-4">
+        <a href="#"><i class="fab fa-facebook-f"></i>&nbsp</a>
+        <a href="#"><i class="fab fa-twitter"></i>&nbsp</a>
+        <a href="#"><i class="fab fa-instagram"></i>&nbsp</a>
+        <a href="#"><i class="fab fa-whatsapp"></i>&nbsp</a>
+      </div>
+    </div>
+    <br/>
     <p class="text-monospace">
       <i class="fas fa-podcast"></i>&nbsp;<mark>{{ user.status }}</mark>
     </p>
