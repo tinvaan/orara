@@ -1,4 +1,33 @@
 {% extends "base.html" %}
 
 {% block content %}
+<div style="height:100px;"></div>
+
+<div class="row">
+  <div class="col-sm-3"></div>
+
+  <div class="col-sm-6"></div>
+
+  <div class="col-sm-3">
+    <div class="card" style="width: 24rem;">
+      <div class="card-header">People suggestions</div>
+      <ul class="list-group list-group-flush">
+        {% for people in suggested.flocks %}
+        <li class="list-group-item">
+          <div class="row">
+            <img class="rounded-circle max-auto d-block" src="{{ people.photo.url }}" width=100 height=80>
+            <span class="col-sm-1"></span>
+            <div class="col">
+              <h6 class="card-title">{{ people.name }}</h6>
+              <a href="#" class="btn btn-sm btn-primary">Connect</a>
+              <a href="#" class="btn btn-sm btn-secondary">Dismiss</a>
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+        <li class="list-group-item"><div align="center"><a href="#">See More </a></div></li>
+      </ul>
+    </div>
+  </div>
+</div>
 {% endblock %}

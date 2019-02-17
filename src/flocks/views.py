@@ -9,7 +9,7 @@ from events.models import EventCustomers
 from profiles.models import OraraUser, UserInterests
 from profiles.contexts import profile_info, social_info
 from flocks.models import UserBookmarks, OraraConnections
-from flocks.utils import segregate, match_percentage, get_customers
+from flocks.utils import nearby, segregate, match_percentage, get_customers
 
 
 @login_required
@@ -67,49 +67,7 @@ def explore(request):
     Find people with similar interests around you
     (consider: age, gender, common places, mutual friends, langauges, etc)
     '''
-    users = []
-
-    # Has the user registered any interests ?
-    try:
-        if UserInterests.objects.get(user=request.user):
-            interests_known = True
-    except UserInterests.DoesNotExist:
-        interests_known = False
-
-    # Filter by
-    # 1) Location | TODO: Narrow down using lat/lon in next iteration
-    # 2) Interests
-    for user in OraraUser.objects.filter(area=request.user.area):
-        # List all users in proximity if user's interest are not known
-        if not interests_known:
-            users.append({
-                'username': user.username,
-                'name': user.name(),
-                'area': user.area,
-                'bio': user.bio,
-                'status': user.status,
-                'college': user.college,
-                'workplace': user.workplace,
-                'photo': user.photo
-            })
-        else:
-            # List users with matching interests
-            try:
-                interest = UserInterests.objects.get(user=user)
-                if not match_percentage(interest.user, request.user) == 0:
-                    users.append({
-                        'username': user.username,
-                        'name': user.name(),
-                        'area': user.area,
-                        'bio': user.bio,
-                        'status': user.status,
-                        'college': user.college,
-                        'workplace': user.workplace,
-                        'photo': user.photo
-                    })
-            except UserInterests.DoesNotExist:
-                pass
-
+    users = nearby(request.user)
     friends, others = segregate(request.user, users)
     context = {
         'profile': profile_info(request.user),
