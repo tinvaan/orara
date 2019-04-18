@@ -1,7 +1,18 @@
-from events.models import EventCustomers
 from profiles.models import INTERESTS
 from profiles.models import OraraUser, UserInterests
+from events.models import EventCustomers, EventInvites
 from flocks.models import OraraConnections, UserBookmarks
+
+
+def invites(user):
+    all = EventInvites.objects.filter(user=user)
+    return len(all)
+
+
+def connections(user):
+    left = OraraConnections.objects.filter(user1=user)
+    right = OraraConnections.objects.filter(user2=user)
+    return len(left) + len(right)
 
 
 def match_percentage(user1, user2):

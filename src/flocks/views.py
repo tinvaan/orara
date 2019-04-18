@@ -31,11 +31,13 @@ def summary(request):
                 'workplace': user.workplace,
                 'photo': user.photo
             })
+    friends, others = segregate(request.user, users)
     context = {
         'profile': profile_info(request.user),
         'social': social_info(request.user),
         'found': True,
-        'users': users,
+        'users': others,
+        'connections': friends
     }
     return render(request, 'flocks/summary.html', context)
 

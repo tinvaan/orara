@@ -11,7 +11,8 @@ def profile_info(user):
         'area': user.area,
         'email': user.email,
         'phone': user.phone,
-        'status': user.status
+        'status': user.status,
+        'photo': user.photo
     }
 
 

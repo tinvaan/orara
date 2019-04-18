@@ -4,29 +4,47 @@
 <div style="height:100px;"></div>
 
 <div class="row">
-  <div class="col-sm-3"></div>
+  <div class="col-sm-4">
+    <!-- Profile badge -->
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <img class="rounded-circle mx-auto d-block" src="{{ profile.photo.url }}" width=100 height=100>
+        </div>
+        <br/>
+        <div class="col">
+          <center><h5 class="card-title"><strong>{{ profile.name }}</strong></h5></center>
+          <center><h6 class="card-subtitle mb-2 text-muted"><em>@{{ profile.username }}</em></h6></center>
+        </div>
+        <center>
+          <a class="card-link"><strong>{{ invites }}</strong> invites</a>
+          <a class="card-link"><strong>{{ connections }}</strong> connections</a>
+        </center>
+      </div>
+    </div>
 
-  <div class="col-sm-6"></div>
+    <br/>
 
-  <div class="col-sm-3">
-    <div class="card" style="width: 24rem;">
-      <div class="card-header">People suggestions</div>
-      <ul class="list-group list-group-flush">
-        {% for people in suggested.flocks %}
-        <li class="list-group-item">
-          <div class="row">
-            <img class="rounded-circle max-auto d-block" src="{{ people.photo.url }}" width=100 height=80>
-            <span class="col-sm-1"></span>
-            <div class="col">
-              <h6 class="card-title">{{ people.name }}</h6>
-              <a href="#" class="btn btn-sm btn-primary">Connect</a>
-              <a href="#" class="btn btn-sm btn-secondary">Dismiss</a>
+    <!-- People suggestions -->
+    <div class="card">
+      <div class="card-header">Profile suggestions</div>
+        <ul class="list-group list-group-flush">
+          {% for people in suggested.flocks %}
+          <li class="list-group-item">
+            <div class="row">
+              <img class="rounded-circle max-auto d-block" src="{{ people.photo.url }}" width=80 height=80>
+              <span class="col-sm-1"></span>
+              <div class="col">
+                <h6 class="card-title">{{ people.name }}</h6>
+                <a href="#" class="btn btn-sm btn-primary">Connect</a>
+                <a href="#" class="btn btn-sm btn-secondary">Dismiss</a>
+              </div>
             </div>
-          </div>
-        </li>
-        {% endfor %}
-        <li class="list-group-item"><div align="center"><a href="#">See More </a></div></li>
-      </ul>
+          </li>
+          {% endfor %}
+          <li class="list-group-item"><div align="center"><a href="#">See More </a></div></li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

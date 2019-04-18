@@ -3,10 +3,10 @@ from django.http import HttpResponseRedirect, HttpResponseNotFound
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 
-from flocks.utils import has_connection, suggestions
 from profiles.models import OraraUser
 from profiles.contexts import profile_info, social_info
 from profiles.utils import interested_events, registered_events
+from flocks.utils import invites, has_connection, suggestions, connections
 
 
 def signin(request):
@@ -29,6 +29,8 @@ def home(request):
     return render(request, 'home.html', {
         'profile': profile_info(request.user),
         'social': social_info(request.user),
+        'invites': invites(request.user),
+        'connections': connections(request.user),
         'suggested': {
             'flocks': suggestions(request.user),
             'events': []
