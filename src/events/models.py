@@ -83,7 +83,7 @@ class EventCustomers(models.Model):
     Customers going to an event
     '''
     event = models.ForeignKey(OraraEvent, on_delete=models.CASCADE)
-    customer =  models.ForeignKey(OraraUser, on_delete=models.CASCADE)
+    customer = models.ForeignKey(OraraUser, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = "Customer"
