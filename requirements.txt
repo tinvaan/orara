@@ -10,3 +10,4 @@ social-auth-app-django==2.1.0
 django-multiselectfield==0.1.8
 geographiclib==1.49
 geopy==1.17.0
+psycopg2==2.8.2
