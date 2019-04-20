@@ -17,14 +17,23 @@ INTERESTS = (
     ("MV", "MOVIES"),
     ("PH", "PHOTOGRAPHY"))
 
-
 class OraraUser(AbstractUser):
+    MALE = ("M", "MALE")
+    FEMALE = ("F", "FEMALE")
+    NEUTRAL = ("N", "NEUTRAL")
+    UNKNOWN = ("NA", "UNKNOWN")
+    GENDER_OPTIONS = (
+        (MALE, "Male"),
+        (FEMALE, "Female"),
+        (NEUTRAL, "Neutral")
+    )
+    gender = models.CharField(verbose_name="Gender", max_length=2,
+                              default=UNKNOWN, choices=GENDER_OPTIONS)
     bio = models.CharField(verbose_name="Short Description", blank=True, max_length=240, default='None')
     college = models.CharField(verbose_name="College", blank=True, max_length=80, default="NA")
     workplace = models.CharField(verbose_name="Workplace", blank=True, max_length=60, default='NA')
-    photo = models.ImageField(verbose_name="Profile photo", blank=True, upload_to='profiles')
-    validator = RegexValidator(regex=r'^\+?1?\d{9,15}$',
-                               message="Format(15 digits): '+999999999'.")
+    photo = models.ImageField(verbose_name="Profile photo", upload_to="profiles", default="profiles/default.jpg")
+    validator = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Format(15 digits): '+999999999'.")
     status = models.TextField(verbose_name="Status", default="Available")
     phone = models.CharField(verbose_name="Contact Number", validators=[validator], max_length=17, blank=True)
     area = models.CharField(verbose_name="Area", max_length=40, blank=True)
