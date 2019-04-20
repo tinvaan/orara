@@ -61,7 +61,9 @@ def explore(request):
         events = OraraEvent.objects.all()
 
     response = []
-    external_events = all(request.user.area)
+    # NOTE: External events support disabled temporarily
+    # external_events = all(request.user.area)
+    external_events = []
     for event in events:
         if event.venue_area == request.user.area:
             response.append({

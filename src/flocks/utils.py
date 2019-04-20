@@ -146,6 +146,6 @@ def suggestions(user):
             try:
                 OraraConnections.objects.get(user1=user2, user2=user1)
             except OraraConnections.DoesNotExist:
-                suggested.append(person)
+                if person['username'] != user.username: suggested.append(person)
 
     return suggested
