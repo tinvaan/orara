@@ -3,6 +3,7 @@
 *.sqlite3
 
 media/
+resources/
 __pycache__/
 
 # Elastic Beanstalk Files

@@ -4,7 +4,7 @@
 <div style="height:100px;"></div>
 
 <div class="row">
-  <div class="col-sm-4">
+  <div class="col-sm-3">
     <!-- Profile badge -->
     <div class="card">
       <div class="card-body">
@@ -22,9 +22,34 @@
         </center>
       </div>
     </div>
+  </div>
 
-    <br/>
+  <div class="col-sm-6">
+    {% for index in "1234567" %}
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <img class="rounded-circle mx-auto d-block" src="{{ profile.photo.url }}" width=40 height=40>
+            <div class="col">
+              <h5 class="card-title">
+                <a href=#><strong>John Doe</strong></a>
+                <em>@johndoe</em></h5>
+              <h6 class="card-subtitle mb-2 text-muted">Sept 14, 2019, 6:46AM</h6>
+            </div>
+          </div>
+          <br/>
+          <p class="card-text">This is my plan for the weekend</p>
+          <br/>
+          <h6 class="card-subtitle mb-2 text-muted">2 likes</h6>
+          <a href="#" class="card-link"><i class="far fa-thumbs-up"></i></a>
+          <a href="#" class="card-link"><i class="fas fa-share-alt"></i></a>
+        </div>
+      </div>
+      <br/>
+    {% endfor %}
+  </div>
 
+  <div class="col-sm-3">
     <!-- People suggestions -->
     <div class="card">
       <div class="card-header">Profile suggestions</div>
@@ -37,7 +62,6 @@
               <div class="col">
                 <h6 class="card-title">{{ people.name }}</h6>
                 <a href="#" class="btn btn-sm btn-primary">Connect</a>
-                <a href="#" class="btn btn-sm btn-secondary">Dismiss</a>
               </div>
             </div>
           </li>
